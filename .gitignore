@@ -1,0 +1,45 @@
+# Dependências
+node_modules/
+.pnp
+.pnp.js
+
+# Arquivos de ambiente (variáveis sensíveis)
+.env
+.env.local
+.env*.local
+
+# Logs e cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.cache/
+*.log
+
+# Build e diretórios de saída
+dist/
+build/
+out/
+.next/
+.serverless/
+
+# Arquivos de IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# TypeScript/Node.js
+*.tsbuildinfo
+.js
+!src/**/*.ts
+
+# Testes
+coverage/
+.nyc_output/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar todos os arquivos que começam com 'test' e terminam com '.ts'
+test*.ts

@@ -1,0 +1,19 @@
+{
+  "name": "poo_bank",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "del /s /q build && tsc"
+  },
+  "author": "Gabriel Oliveira",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "intl": "^1.2.5"
+  }
+}
