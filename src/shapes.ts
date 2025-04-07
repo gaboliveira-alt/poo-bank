@@ -12,7 +12,7 @@ class Shape {
 
 
     perimeter(): number {
-        throw Error('Not implemented');
+        throw Error('Not implemented yet');
     }
 }
 
