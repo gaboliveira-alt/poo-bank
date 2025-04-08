@@ -1,63 +1,83 @@
-class Shape {
+abstract class Shape {
     public readonly name: string;
 
     constructor(name: string) {
         this.name = name;
     }
 
-    
-    area(): number {
-        throw Error('Not implemented');
-    }
-
-
-    perimeter(): number {
-        throw Error('Not implemented yet');
-    }
+    protected abstract validate(): void
+    public abstract area(): number 
+    public abstract perimeter(): number
 }
 
-class SideShape extends Shape {
-    public readonly sides: number[]
 
-    constructor(name: string, sides: number[]) {
+abstract class EdgeShape extends Shape {
+    public readonly edges: number[]
+
+    constructor(name: string, edges: number[]) {
         super(name)
-        this.sides = []
-        this.sides.concat(sides)
+        this.edges = [...edges]
+        this.validate()
+
+        }
+
+        protected validate(): void {
+            for (const edge of this.edges) {
+                if (edge <= 0) {
+                    throw new Error('Shapes side must be positive values')
+                }
+            }
+        }
+
+        public perimeter(): number {
+            let sum = 0
+            for (const edge of this.edges) {
+                sum += edge
+            }
+
+            return sum
+        }
+    }
+
+abstract class NoEdgeShape extends Shape {}
+
+
+class Triangle extends EdgeShape {
+    constructor(name: string, edge1: number, edge2: number, edge3: number) {
+        super(name, [edge1, edge2, edge3])
+        this.validate()
+    }
+
+    protected validate(): void {
+        const s1 = this.edges[0]
+        const s2 = this.edges[1]
+        const s3 = this.edges[2]
+
+        super.validate()
+
+        if (!(s1 + s2 > s3 && s1 + s3 > s2 && s2 + s3 > s1)) {
+            throw new Error('Invalid triangle edges')
+        }
+    }
+
+    area(): number {
+        const perimeter = this.perimeter() / 2
+        const s1 = this.edges[0]
+        const s2 = this.edges[1]
+        const s3 = this.edges[2]
+
+        return Math.sqrt(perimeter * (perimeter - s1) * (perimeter - s2) * (perimeter - s3))
     }
 }
 
 
-
-class Triangle extends SideShape {
-    constructor(name: string, sides: number[]) {
-        super(name, sides)
-
-        if (sides.length != 3) {
-            throw Error('Triangle must have 3 sides')
-        }
-
-        if (!this.validate(sides)) {
-            throw Error('Not a Triangle')
-        }
+class Rect extends EdgeShape {
+    constructor(name: string, witdh: number, height: number) {
+        super(name, [witdh, height])
+        this.validate()
     }
 
-
-    protected validate(sides: number[]): boolean {
-        const side1 = sides[0]
-        const side2 = sides[1]
-        const side3 = sides[2]
-
-        return (side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1)
+    public area(): number {
+        return this.edges[0] * this.edges[1]
     }
 }
-
-
-class Ret extends SideShape {
-    constructor(name: string, sides: number[]) {
-        super(name, sides)
-
-        if (sides.length != 2) {
-            throw Error('Invalid rectangle sides')
-        }
-    }
-} 
