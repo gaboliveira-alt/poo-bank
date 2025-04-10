@@ -5,7 +5,12 @@ abstract class Shape {
         this.name = name;
     }
 
-    protected abstract validate(): void
+    protected validate(): void {
+        const regs = /^[\w-js]/
+        if (!regs.test(this.name)) {
+            throw new Error('Invalid Shape Name')
+        }
+    }
     public abstract area(): number 
     public abstract perimeter(): number
 }
@@ -22,6 +27,8 @@ abstract class EdgeShape extends Shape {
         }
 
         protected validate(): void {
+            super.validate()
+            
             for (const edge of this.edges) {
                 if (edge <= 0) {
                     throw new Error('Shapes side must be positive values')
